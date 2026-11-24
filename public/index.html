@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blockchain Aula</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230f172a'/%3E%3Crect x='4' y='9' width='8' height='6' rx='3' fill='none' stroke='%2322d3ee' stroke-width='1.8'/%3E%3Crect x='12' y='9' width='8' height='6' rx='3' fill='none' stroke='%23a78bfa' stroke-width='1.8'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+      </span>
+      <div>
+        <h1>Blockchain Aula</h1>
+        <p class="subtitle">Mensajes que se minan en grupo</p>
+      </div>
+    </div>
+    <div class="node-info">
+      <span class="pill" id="node-name">nodo</span>
+      <span class="pill" id="node-port">:3000</span>
+      <span class="pill accent" id="difficulty">dificultad 5</span>
+    </div>
+  </header>
+
+  <section class="statusbar">
+    <div class="stat">
+      <span class="dot" id="seed-dot"></span>
+      Semilla <b id="seed-status">conectando…</b>
+    </div>
+    <div class="stat">Pares <b id="peer-count">0</b></div>
+    <div class="stat">Bloques <b id="block-count">1</b></div>
+    <div class="stat">Mensajes <b id="msg-count">0</b></div>
+    <div class="stat">Pendientes <b id="pending-count">0</b></div>
+  </section>
+
+  <main class="layout">
+    <section class="panel chat-panel">
+      <div class="panel-header">
+        <h2>Mensajes</h2>
+        <span class="hint">se confirman al minar</span>
+      </div>
+      <div class="messages" id="messages">
+        <div class="empty">Aún no hay mensajes. Escribe el primero y mira cómo toda la red compite por minarlo.</div>
+      </div>
+      <form class="composer" id="composer" autocomplete="off">
+        <input id="author" placeholder="Tu nombre" maxlength="40" aria-label="Tu nombre">
+        <input id="text" placeholder="Escribe un mensaje…" maxlength="500" aria-label="Mensaje">
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <section class="panel mining-panel">
+      <div class="mining-card" id="mining-card">
+        <div class="mining-head">
+          <span class="mining-spinner" id="mining-spinner"></span>
+          <span id="mining-label">Esperando mensajes</span>
+          <button type="button" class="ghost" id="mining-toggle">Pausar</button>
+        </div>
+        <div class="mining-metrics">
+          <div><span>Intentos</span><b id="mining-attempts">—</b></div>
+          <div><span>Hash/s</span><b id="mining-rate">—</b></div>
+          <div><span>Nonce</span><b id="mining-nonce">—</b></div>
+        </div>
+        <code class="mining-hash" id="mining-hash">esperando trabajo…</code>
+        <div class="last-block" id="last-block">Todavía no has minado un bloque</div>
+      </div>
+
+      <div class="chain-header">
+        <h2>Cadena</h2>
+        <span class="hint">la más larga gana</span>
+      </div>
+      <div class="chain" id="chain"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Proof of Work SHA-256</span>
+    <span class="sep">·</span>
+    <span>P2P WebSocket</span>
+    <span class="sep">·</span>
+    <span id="connection">conectando…</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
